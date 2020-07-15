@@ -1,7 +1,5 @@
 ﻿Shader "Custom/Damage Shader" {
     Properties{
-        _MainTex("Txture", 2D) = "white" {}
-        _Alpha("Alpha" , Float) = 1
     }
     SubShader{
         Tags { "RenderType" = "Transparent" "Queue" = "Transparent+2" }
@@ -17,8 +15,6 @@
             #pragma fragment frag
                
             #include "UnityCG.cginc"
-
-            #define COLORS 32.0
 
             struct appdata
             {
@@ -39,14 +35,15 @@
                 return o;
             };
 
-            sampler2D _MainTex;
-            float _Alpha;
-
             fixed4 frag(v2f i) : SV_Target
             {
-                float2 suv = ((i.ScreenPos.xy) / i.ScreenPos.w);
-                fixed4 col = saturate(tex2D(_MainTex, suv));
-                fixed4 c = fixed4(col.rgb, col.a* _Alpha);
+                fixed4 c;
+                if(i.ScreenPos.x / i.ScreenPos.w < 0.1) {
+                    c = fixed4(1, 1, 0, 1);
+                }
+                else {
+                    c = fixed4(0, 0, 0, 0);
+                }
                 return c;
             }
             ENDCG

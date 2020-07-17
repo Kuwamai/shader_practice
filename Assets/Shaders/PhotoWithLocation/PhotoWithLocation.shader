@@ -35,13 +35,36 @@
                 return o;
             };
 
+            float sdBox(float2 p, float2 s){
+                float2 d = abs(p) - s;
+                return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
+            }
+
             fixed4 frag(v2f i) : SV_Target
             {
                 fixed4 c;
-                if(i.ScreenPos.x / i.ScreenPos.w < 0.1) {
+                float2 ScreenPos = i.ScreenPos.xy / i.ScreenPos.w;
+                float2 width = float2(0.0938, 0.1667);
+                //float2 width = float2(1/6*9/16, 1.0/6.0);
+
+                if(ScreenPos.x < 0.0938 && ScreenPos.y < width.y) {
+                    c = fixed4(0, 1, 0, 1);
+                }
+                else if(ScreenPos.x < width.x && ScreenPos.y < width.y*2.0) {
                     c = fixed4(1, 1, 0, 1);
                 }
-                else {
+                else if(ScreenPos.x < width.x && ScreenPos.y < width.y*3.0) {
+                    c = fixed4(1, 1, 1, 1);
+                }
+                else if(ScreenPos.x < width.x && ScreenPos.y < width.y*4.0) {
+                    c = fixed4(0, 0, 1, 1);
+                }
+                else if(ScreenPos.x < width.x && ScreenPos.y < width.y*5.0) {
+                    c = fixed4(1, 0, 1, 1);
+                }
+                else if(ScreenPos.x < width.x && ScreenPos.y < 1.0) {
+                    c = fixed4(1, 0, 0, 1);
+                } else {
                     c = fixed4(0, 0, 0, 0);
                 }
                 return c;

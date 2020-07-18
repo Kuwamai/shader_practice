@@ -70,13 +70,13 @@
                     c = fixed4(hsv2rgb(i.CameraPos.z / _ZLim - 0.5, 1, 1), 1);
                 }
                 else if(ScreenPos.y >= width.y*2.0 && ScreenPos.y < width.y*3.0) {
-                    c = fixed4(0, 0, 1, 1);
+                    c = fixed4(hsv2rgb(asin(-UNITY_MATRIX_V._m21), 1, 1), 1);
                 }
                 else if(ScreenPos.y >= width.y     && ScreenPos.y < width.y*2.0) {
-                    c = fixed4(1, 0, 1, 1);
+                    c = fixed4(hsv2rgb(atan2(UNITY_MATRIX_V._m20, UNITY_MATRIX_V._m22), 1, 1), 1);
                 }
                 else if(ScreenPos.y < width.y) {
-                    c = fixed4(1, 0, 0, 1);
+                    c = fixed4(hsv2rgb(atan2(UNITY_MATRIX_V._m01, UNITY_MATRIX_V._m11), 1, 1), 1);
                 }
                 return c;
             }

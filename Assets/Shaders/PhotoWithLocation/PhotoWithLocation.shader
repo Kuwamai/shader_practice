@@ -1,4 +1,4 @@
-﻿Shader "Custom/Damage Shader" {
+﻿Shader "Custom/Photo with location" {
     Properties{
     }
     SubShader{
@@ -34,11 +34,6 @@
                 o.ScreenPos = ComputeScreenPos(o.Vertex);
                 return o;
             };
-
-            float sdBox(float2 p, float2 s){
-                float2 d = abs(p) - s;
-                return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
-            }
 
             fixed4 frag(v2f i) : SV_Target
             {

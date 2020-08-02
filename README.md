@@ -1,2 +1,2 @@
-# shader_practice
+# shader_practice[WIP]
 Unity shaderの練習

@@ -48,7 +48,8 @@
                 float4 t = float4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
                 float3 p = abs(frac(float3(h, h, h) + t.xyz) * 6.0 - float3(t.w, t.w, t.w));
                 float3 hsv = v * lerp(float3(t.x, t.x, t.x), clamp(p - float3(t.x, t.x, t.x), 0.0, 1.0), s);
-                return clamp(hsv, 0.1, 0.9);
+                return hsv;
+                //return clamp(hsv, 0.02, 0.98);
             }
 
             fixed4 frag(v2f i) : SV_Target
@@ -71,31 +72,31 @@
                     c = fixed4(hsv2rgb(i.CameraPos.z / _ZLim - 0.5, 1, 1), 1);
                 }
                 else if(ScreenPos.y >= width.y*8.0 && ScreenPos.y < width.y*9.0) {
-                    c = fixed4(hsv2rgb((UNITY_MATRIX_V._m00+1.0)/2.0, 1, 1), 1);
+                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m00, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
                 }
                 else if(ScreenPos.y >= width.y*7.0 && ScreenPos.y < width.y*8.0) {
-                    c = fixed4(hsv2rgb((UNITY_MATRIX_V._m01+1.0)/2.0, 1, 1), 1);
+                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m01, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
                 }
                 else if(ScreenPos.y >= width.y*6.0 && ScreenPos.y < width.y*7.0) {
-                    c = fixed4(hsv2rgb((UNITY_MATRIX_V._m02+1.0)/2.0, 1, 1), 1);
+                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m02, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
                 }
                 else if(ScreenPos.y >= width.y*5.0 && ScreenPos.y < width.y*6.0) {
-                    c = fixed4(hsv2rgb((UNITY_MATRIX_V._m10+1.0)/2.0, 1, 1), 1);
+                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m10, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
                 }
                 else if(ScreenPos.y >= width.y*4.0 && ScreenPos.y < width.y*5.0) {
-                    c = fixed4(hsv2rgb((UNITY_MATRIX_V._m11+1.0)/2.0, 1, 1), 1);
+                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m11, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
                 }
                 else if(ScreenPos.y >= width.y*3.0 && ScreenPos.y < width.y*4.0) {
-                    c = fixed4(hsv2rgb((UNITY_MATRIX_V._m12+1.0)/2.0, 1, 1), 1);
+                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m12, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
                 }
                 else if(ScreenPos.y >= width.y*2.0 && ScreenPos.y < width.y*3.0) {
-                    c = fixed4(hsv2rgb((UNITY_MATRIX_V._m20+1.0)/2.0, 1, 1), 1);
+                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m20, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
                 }
                 else if(ScreenPos.y >= width.y     && ScreenPos.y < width.y*2.0) {
-                    c = fixed4(hsv2rgb((UNITY_MATRIX_V._m21+1.0)/2.0, 1, 1), 1);
+                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m21, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
                 }
                 else if(ScreenPos.y < width.y) {
-                    c = fixed4(hsv2rgb((UNITY_MATRIX_V._m22+1.0)/2.0, 1, 1), 1);
+                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m22, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
                 }
                 return c;
             }

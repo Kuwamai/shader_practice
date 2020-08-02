@@ -6,17 +6,13 @@
         _ZLim ("Z-limit", Float) = 0.0
     }
     SubShader{
-        //Tags { "RenderType" = "Transparent" "Queue" = "Transparent+2" }
-        //LOD 200
-        //Cull Off
-
         Pass
         {
             Blend SrcAlpha OneMinusSrcAlpha
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-               
+
             #include "UnityCG.cginc"
 
             struct appdata
@@ -27,17 +23,14 @@
 
             struct v2f
             {
-                float2 uv : TEXCOORD0;
-                float4 ScreenPos   : TEXCOORD1;
-                float3 CameraPos   : TEXCOORD2;
                 float4 Vertex : SV_POSITION;
+                float2 uv : TEXCOORD0;
             };
 
             float _XLim;
             float _YLim;
             float _ZLim;
             sampler2D _Photo;
-            float4 _Photo_ST;
 
             float3 rgb2hsv(float3 c){
                 float4 K = float4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -57,30 +50,15 @@
 
             v2f vert(appdata v) {
                 v2f o;
-                /*
-                float4x4 mat = float4x4(
-                    float4(getTexVal(8.0), -getTexVal(5.0), -getTexVal(2.0), getTexVal(11.0) * _XLim / 2.0),
-                    float4(-getTexVal(7.0), getTexVal(4.0), -getTexVal(1.0), getTexVal(10.0) * _YLim / 2.0),
-                    float4(-getTexVal(6.0), -getTexVal(3.0), getTexVal(0.0), getTexVal(9.0)  * _ZLim / 2.0),
-                    float4(0, 0, 0, 1));
-                //tashikanihidaritekeidawakore
-                float4x4 mat = float4x4(
-                    float4(getTexVal(8.0), getTexVal(7.0), getTexVal(6.0), getTexVal(11.0) * _XLim / 2.0),
-                    float4(getTexVal(5.0), getTexVal(4.0), getTexVal(3.0), getTexVal(10.0) * _YLim / 2.0),
-                    float4(getTexVal(2.0), getTexVal(1.0), getTexVal(0.0), getTexVal(9.0)  * _ZLim / 2.0),
-                    float4(0, 0, 0, 1));
-                */
+
                 float4x4 mat = float4x4(
                     float4(getTexVal(8.0), getTexVal(5.0), getTexVal(2.0), getTexVal(11.0) * _XLim / 2.0),
                     float4(getTexVal(7.0), getTexVal(4.0), getTexVal(1.0), getTexVal(10.0) * _YLim / 2.0),
                     float4(getTexVal(6.0), getTexVal(3.0), getTexVal(0.0), getTexVal(9.0)  * _ZLim / 2.0),
                     float4(0, 0, 0, 1));
-                //o.Vertex = mul(v.Vertex, mat);
+
                 o.Vertex = mul(mat, v.Vertex);
-                //o.Vertex.xyz = o.Vertex.xyz + mul(mat, float4(0, 0, 0 ,1)).xyz;
                 o.Vertex = UnityObjectToClipPos(o.Vertex);
-                o.ScreenPos = ComputeScreenPos(o.Vertex);
-                o.CameraPos = _WorldSpaceCameraPos;
                 o.uv = v.uv;
                 return o;
             };

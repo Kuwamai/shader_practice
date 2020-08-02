@@ -49,7 +49,6 @@
                 float3 p = abs(frac(float3(h, h, h) + t.xyz) * 6.0 - float3(t.w, t.w, t.w));
                 float3 hsv = v * lerp(float3(t.x, t.x, t.x), clamp(p - float3(t.x, t.x, t.x), 0.0, 1.0), s);
                 return hsv;
-                //return clamp(hsv, 0.02, 0.98);
             }
 
             fixed4 frag(v2f i) : SV_Target

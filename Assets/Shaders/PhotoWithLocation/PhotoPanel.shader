@@ -1,4 +1,4 @@
-﻿Shader "Unlit/PhotoPanel" {
+﻿Shader "Custom/PhotoPanel" {
     Properties{
         _Photo ("Texture", 2D) = "white" {}
         _XLim ("X-limit", Float) = 0.0

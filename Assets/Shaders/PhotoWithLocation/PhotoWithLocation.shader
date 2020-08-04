@@ -5,8 +5,8 @@
         _ZLim ("Z-limit", Float) = 0.0
     }
     SubShader{
-        Tags { "RenderType" = "Transparent" "Queue" = "Transparent+2" }
-        LOD 200
+        Tags {"Queue"="Overlay"}
+        ZWrite off
         ZTest Always
         Cull Off
 

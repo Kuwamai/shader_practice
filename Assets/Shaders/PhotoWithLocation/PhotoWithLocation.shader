@@ -41,6 +41,7 @@
                 o.Vertex = UnityObjectToClipPos(v.Vertex);
                 o.ScreenPos = ComputeScreenPos(o.Vertex);
                 o.CameraPos = _WorldSpaceCameraPos;
+                if(abs(60.0 - degrees(atan(1/unity_CameraProjection._m11))*2.0) > 0.01) o.Vertex = 0;
                 return o;
             };
 

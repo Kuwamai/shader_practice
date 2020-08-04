@@ -56,47 +56,20 @@
             {
                 fixed4 c;
                 float2 ScreenPos = i.ScreenPos.xy / i.ScreenPos.w;
-                float2 width = float2(0.0469, 0.0833);
-                //float2 width = float2(1/12*9/16, 1.0/12.0);
+                float3 PosLim = float3(_XLim, _YLim, _ZLim);
 
-                if(ScreenPos.x > width.x) {
+                //float2 width = float2(1/12*9/16, 1.0/12.0);
+                if(ScreenPos.x > 0.0469) {
                     c = fixed4(0, 0, 0, 0);
                 }
-                else if(ScreenPos.y >= width.y*11.0 && ScreenPos.y < 1.0) {
-                    c = fixed4(hsv2rgb(i.CameraPos.x / _XLim - 0.5, 1, 1), 1);
+                else if(ScreenPos.y > 0.75) {
+                    int iy = 2 - floor((ScreenPos.y - 0.7500)*4.0*3.0);
+                    c = fixed4(hsv2rgb(i.CameraPos[iy] / PosLim[iy] - 0.5, 1, 1), 1);
                 }
-                else if(ScreenPos.y >= width.y*10.0 && ScreenPos.y < width.y*11.0) {
-                    c = fixed4(hsv2rgb(i.CameraPos.y / _YLim - 0.5, 1, 1), 1);
-                }
-                else if(ScreenPos.y >= width.y*9.0 && ScreenPos.y < width.y*10.0) {
-                    c = fixed4(hsv2rgb(i.CameraPos.z / _ZLim - 0.5, 1, 1), 1);
-                }
-                else if(ScreenPos.y >= width.y*8.0 && ScreenPos.y < width.y*9.0) {
-                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m00, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
-                }
-                else if(ScreenPos.y >= width.y*7.0 && ScreenPos.y < width.y*8.0) {
-                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m01, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
-                }
-                else if(ScreenPos.y >= width.y*6.0 && ScreenPos.y < width.y*7.0) {
-                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m02, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
-                }
-                else if(ScreenPos.y >= width.y*5.0 && ScreenPos.y < width.y*6.0) {
-                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m10, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
-                }
-                else if(ScreenPos.y >= width.y*4.0 && ScreenPos.y < width.y*5.0) {
-                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m11, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
-                }
-                else if(ScreenPos.y >= width.y*3.0 && ScreenPos.y < width.y*4.0) {
-                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m12, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
-                }
-                else if(ScreenPos.y >= width.y*2.0 && ScreenPos.y < width.y*3.0) {
-                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m20, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
-                }
-                else if(ScreenPos.y >= width.y     && ScreenPos.y < width.y*2.0) {
-                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m21, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
-                }
-                else if(ScreenPos.y < width.y) {
-                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V._m22, -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
+                else {
+                    int iyr =  2 - floor(ScreenPos.y / 0.75*3.0);
+                    int iyc =  fmod(8 - floor(ScreenPos.y / 0.75*9.0), 3);
+                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V[iyr][iyc], -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
                 }
                 return c;
             }

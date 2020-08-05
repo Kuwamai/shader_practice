@@ -21,7 +21,7 @@
 
             struct appdata
             {
-                float4 Vertex : POSITION;
+                float4 vertex : POSITION;
                 float4 texcoord : TEXCOORD0;
             };
 
@@ -29,7 +29,7 @@
             {
                 float4 ScreenPos   : TEXCOORD0;
                 float3 CameraPos    : TEXCOORD1;
-                float4 Vertex : SV_POSITION;
+                float4 vertex : SV_POSITION;
             };
 
             float _XLim;
@@ -38,10 +38,10 @@
 
             v2f vert(appdata v) {
                 v2f o;
-                o.Vertex = UnityObjectToClipPos(v.Vertex);
-                o.ScreenPos = ComputeScreenPos(o.Vertex);
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.ScreenPos = ComputeScreenPos(o.vertex);
                 o.CameraPos = _WorldSpaceCameraPos;
-                if(abs(60.0 - degrees(atan(1/unity_CameraProjection._m11))*2.0) > 0.01) o.Vertex = 0;
+                if(abs(60.0 - degrees(atan(1/unity_CameraProjection._m11))*2.0) > 0.01) o.vertex = 0;
                 return o;
             };
 

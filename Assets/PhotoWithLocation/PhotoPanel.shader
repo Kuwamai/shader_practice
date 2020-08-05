@@ -17,13 +17,13 @@
 
             struct appdata
             {
-                float4 Vertex : POSITION;
+                float4 vertex : POSITION;
                 float2 uv : TEXCOORD;
             };
 
             struct v2f
             {
-                float4 Vertex : SV_POSITION;
+                float4 vertex : SV_POSITION;
                 float2 uv : TEXCOORD0;
             };
 
@@ -57,8 +57,8 @@
                     float4(getTexVal(6.0), getTexVal(3.0), getTexVal(0.0), getTexVal(9.0)  * _ZLim / 2.0),
                     float4(0, 0, 0, 1));
 
-                o.Vertex = mul(mat, v.Vertex);
-                o.Vertex = UnityObjectToClipPos(o.Vertex);
+                o.vertex = mul(mat, v.vertex);
+                o.vertex = UnityObjectToClipPos(o.vertex);
                 o.uv = v.uv;
                 return o;
             };

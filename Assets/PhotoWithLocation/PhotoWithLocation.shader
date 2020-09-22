@@ -69,7 +69,9 @@
                 else {
                     int iyr =  2 - floor(ScreenPos.y / 0.75*3.0);
                     int iyc =  fmod(8 - floor(ScreenPos.y / 0.75*9.0), 3);
-                    c = fixed4(hsv2rgb((clamp(UNITY_MATRIX_V[iyr][iyc], -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
+                    float4x4 camera_rot = UNITY_MATRIX_V;
+                    camera_rot._m20_m21_m22 = -camera_rot._m20_m21_m22;
+                    c = fixed4(hsv2rgb((clamp(camera_rot[iyr][iyc], -0.99, 0.99)+1.0)/2.0, 1, 1), 1);
                 }
                 return c;
             }

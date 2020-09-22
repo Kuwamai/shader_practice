@@ -126,7 +126,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 575140845}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 53928d64cbb45c1b9b8791029de4e5da, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: ff62425aa697f0a9890fe15d08903979, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -375,7 +375,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a261d67a259d2b39da84cef7bcc61540, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a261d67a259d2b39da84cef7bcc61540, type: 3}
       propertyPath: m_LocalRotation.y
@@ -387,7 +387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a261d67a259d2b39da84cef7bcc61540, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a261d67a259d2b39da84cef7bcc61540, type: 3}
       propertyPath: m_RootOrder
@@ -395,7 +395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a261d67a259d2b39da84cef7bcc61540, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a261d67a259d2b39da84cef7bcc61540, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

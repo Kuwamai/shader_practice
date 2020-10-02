@@ -3,13 +3,11 @@
     Properties
     {
         _RgbdpTex ("RgbdpTexture", 2D) = "white" {}
-        _MaxDepth ("MaxDepth", Float) = 1.3
-        _MinDepth ("MinDepth", Float) = 0.15
+        _MaxDepth ("MaxDepth", Float) = 3
+        _MinDepth ("MinDepth", Float) = 0.1
         _FovX ("Camera FOV X", Float) = 69.4
         _FovY ("Camera FOV Y", Float) = 52.05
-        _XLim ("X-limit", Float) = 0.0
-        _YLim ("Y-limit", Float) = 0.0
-        _ZLim ("Z-limit", Float) = 0.0
+        _PLim ("Position limit", Float) = 10.0
     }
     SubShader
     {
@@ -34,9 +32,7 @@
             float _MinDepth;
             float _FovX;
             float _FovY;
-            float _XLim;
-            float _YLim;
-            float _ZLim;
+            float _PLim;
 
             struct appdata
             {
@@ -73,12 +69,10 @@
                 FocalLength.x = 0.5 / tan(radians(_FovX / 2));
                 FocalLength.y = 0.5 / tan(radians(_FovY / 2));
                 float4x4 mat = float4x4(
-                    float4(getTexVal(8.0), getTexVal(5.0), getTexVal(2.0), getTexVal(11.0) * _XLim / 2.0),
-                    float4(getTexVal(7.0), getTexVal(4.0), getTexVal(1.0), getTexVal(10.0) * _YLim / 2.0),
-                    float4(getTexVal(6.0), getTexVal(3.0), getTexVal(0.0), getTexVal(9.0)  * _ZLim / 2.0),
+                    float4(getTexVal(8.0), getTexVal(5.0), getTexVal(2.0), getTexVal(11.0) * _PLim / 2.0),
+                    float4(getTexVal(7.0), getTexVal(4.0), getTexVal(1.0), getTexVal(10.0) * _PLim / 2.0),
+                    float4(getTexVal(6.0), getTexVal(3.0), getTexVal(0.0), getTexVal(9.0)  * _PLim / 2.0),
                     float4(0, 0, 0, 1));
-                //float z = _MaxDepth;
-                //float z = abs(rgb2hsv(tex2Dlod(_RgbdpTex, float4(v.uv * 0.4848 + 0.5151, 0, 0))).x -1) * (_MaxDepth - _MinDepth) + _MinDepth;
                 float z = rgb2hsv(tex2Dlod(_RgbdpTex, float4(float2(v.uv.x * 0.4848 + 0.5151, v.uv.y), 0, 0))).x * (_MaxDepth - _MinDepth) + _MinDepth;
                 float x = z * (v.uv.x - 0.5) / FocalLength.x;
                 float y = z * (v.uv.y - 0.5) / FocalLength.y;
@@ -92,7 +86,8 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = fixed4(tex2D(_RgbdpTex, float2(i.uv.x * 0.4848 + 0.0303, i.uv.y)).rgb, rgb2hsv(tex2D(_RgbdpTex, float2(i.uv.x * 0.4848 + 0.5151, i.uv.y))).z);
+                fixed4 col = fixed4(tex2D(_RgbdpTex, float2(i.uv.x * 0.48 + 0.04, i.uv.y)).rgb, rgb2hsv(tex2D(_RgbdpTex, float2(i.uv.x * 0.4848 + 0.5151, i.uv.y))).z);
+                //fixed4 col = fixed4(tex2D(_RgbdpTex, float2(i.uv.x * 0.4848 + 0.0303, i.uv.y)).rgb, rgb2hsv(tex2D(_RgbdpTex, float2(i.uv.x * 0.4848 + 0.5151, i.uv.y))).z);
                 //fixed4 col = fixed4(tex2D(_RgbdpTex, i.uv * 0.4848 + 0.5151).xyz, 1);
                 return col;
             }

@@ -3,13 +3,11 @@
     Properties
     {
         _RgbdpTex ("RgbdpTexture", 2D) = "white" {}
-        _MaxDepth ("MaxDepth", Float) = 1.3
-        _MinDepth ("MinDepth", Float) = 0.15
+        _MaxDepth ("MaxDepth", Float) = 3
+        _MinDepth ("MinDepth", Float) = 0.1
         _FovX ("Camera FOV X", Float) = 69.4
         _FovY ("Camera FOV Y", Float) = 52.05
-        _XLim ("X-limit", Float) = 0.0
-        _YLim ("Y-limit", Float) = 0.0
-        _ZLim ("Z-limit", Float) = 0.0
+        _PLim ("Position limit", Float) = 10.0
         _Size ("Particle size", Range(0, 1)) = 0.1
     }
     SubShader
@@ -31,9 +29,7 @@
             float _MinDepth;
             float _FovX;
             float _FovY;
-            float _XLim;
-            float _YLim;
-            float _ZLim;
+            float _PLim;
             float _Size;
             #pragma exclude_renderers gles
 
@@ -76,9 +72,9 @@
                 FocalLength.x = 0.5 / tan(radians(_FovX / 2));
                 FocalLength.y = 0.5 / tan(radians(_FovY / 2));
                 float4x4 mat = float4x4(
-                    float4(getTexVal(8.0), getTexVal(5.0), getTexVal(2.0), getTexVal(11.0) * _XLim / 2.0),
-                    float4(getTexVal(7.0), getTexVal(4.0), getTexVal(1.0), getTexVal(10.0) * _YLim / 2.0),
-                    float4(getTexVal(6.0), getTexVal(3.0), getTexVal(0.0), getTexVal(9.0)  * _ZLim / 2.0),
+                    float4(getTexVal(8.0), getTexVal(5.0), getTexVal(2.0), getTexVal(11.0) * _PLim / 2.0),
+                    float4(getTexVal(7.0), getTexVal(4.0), getTexVal(1.0), getTexVal(10.0) * _PLim / 2.0),
+                    float4(getTexVal(6.0), getTexVal(3.0), getTexVal(0.0), getTexVal(9.0)  * _PLim / 2.0),
                     float4(0, 0, 0, 1));
                 o.uv = float2((floor(v.vertex.z / texWidth) + 0.5) / texWidth, (fmod(v.vertex.z, texWidth) + 0.5) / texWidth);
                 float z = rgb2hsv(tex2Dlod(_RgbdpTex, float4(float2(o.uv.x * 0.4848 + 0.5151, o.uv.y), 0, 0))).x * (_MaxDepth - _MinDepth) + _MinDepth;

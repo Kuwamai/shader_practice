@@ -93,8 +93,7 @@
                 sz *= pow(determinant((float3x3)UNITY_MATRIX_M),1/3.0);
                 o.vertex = vp1+float4(o.triuv*sz*float2(aspectRatio,1),0,0);
 
-                float4 c = float4(tex2Dlod(_RgbdpTex, float4(o.uv.x * 0.48 + 0.04, o.uv.y, 0, 0)).rgb, 1);
-                //float4 c = float4(tex2Dlod(_RgbdpTex, float4(o.uv.x * 0.4848 + 0.0303, o.uv.y, 0, 0)).rgb, 1);
+                float4 c = float4(tex2Dlod(_RgbdpTex, float4(o.uv.x * 0.4848 + 0.0303, o.uv.y, 0, 0)).rgb, 1);
                 o.color = c;
                 return o;
             }

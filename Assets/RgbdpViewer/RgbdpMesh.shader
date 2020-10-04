@@ -86,8 +86,7 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = fixed4(tex2D(_RgbdpTex, float2(i.uv.x * 0.48 + 0.04, i.uv.y)).rgb, rgb2hsv(tex2D(_RgbdpTex, float2(i.uv.x * 0.4848 + 0.5151, i.uv.y))).z);
-                //fixed4 col = fixed4(tex2D(_RgbdpTex, float2(i.uv.x * 0.4848 + 0.0303, i.uv.y)).rgb, rgb2hsv(tex2D(_RgbdpTex, float2(i.uv.x * 0.4848 + 0.5151, i.uv.y))).z);
+                fixed4 col = fixed4(tex2D(_RgbdpTex, float2(i.uv.x * 0.4848 + 0.0303, i.uv.y)).rgb, rgb2hsv(tex2D(_RgbdpTex, float2(i.uv.x * 0.4848 + 0.5151, i.uv.y))).z);
                 //fixed4 col = fixed4(tex2D(_RgbdpTex, i.uv * 0.4848 + 0.5151).xyz, 1);
                 return col;
             }

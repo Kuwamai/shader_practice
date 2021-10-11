@@ -24,8 +24,8 @@
 
             struct v2f
             {
-                float4 ScreenPos   : TEXCOORD0;
-                float3 CameraPos    : TEXCOORD1;
+                float4 ScreenPos : TEXCOORD0;
+                float3 CameraPos : TEXCOORD1;
                 float4 vertex : SV_POSITION;
             };
 
@@ -39,11 +39,11 @@
             };
 
             fixed4 pos2rgb(float3 Pos, float ScreenPosY){
-                // 16bit = 65536
-                uint3 PosInt = uint3(Pos * 1000 + 32768);
-                int iy = floor(ScreenPosY * 16.0);
+                uint3 PosInt = asuint(Pos);
+                int iy = floor(ScreenPosY * 32.0);
                 return fixed4(PosInt >> iy & 1, 1);
             }
+
 
             fixed4 frag(v2f i) : SV_Target
             {
@@ -51,8 +51,8 @@
                 float2 ScreenPos = i.ScreenPos.xy / i.ScreenPos.w;
                 float4x4 CameraRot = transpose(UNITY_MATRIX_V);
 
-                //float2 width = float2(1/16*9/16, 1.0/16.0);
-                float2 width = float2(0.03515, 0.0625)/2;
+                //float2 width = float2(1/32*9/16, 1.0/32.0);
+                float2 width = float2(0.01758, 0.03125);
                 
                 if(ScreenPos.x < width.x) {
                     c = pos2rgb(i.CameraPos, ScreenPos.y);

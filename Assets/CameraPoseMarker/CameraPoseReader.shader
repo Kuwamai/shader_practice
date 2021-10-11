@@ -32,15 +32,15 @@
             float _Size;
 
             float3 getTexVal(int ix){
-                //float2 width = float2(1/16*9/16, 1.0/16.0);
-                float2 width = float2(0.03515, 0.0625) / 2.0;
+                //float2 width = float2(1/32*9/16, 1.0/32.0);
+                float2 width = float2(0.01758, 0.03125) / 2.0;
 
                 uint3  PosInt = uint3(0, 0, 0);
-                for(int iy=0; iy<16; iy++) {
-                    float2 uv = float2((width.x + width.x * ix * 2.0) / 2, width.y + width.y * iy * 2.0);
+                for(int iy=0; iy<32; iy++) {
+                    float2 uv = float2(width.x + width.x * ix * 2.0, width.y + width.y * iy * 2.0);
                     PosInt += uint3(tex2Dlod(_MainTex, float4(uv, 0, 0)).xyz) << iy;
                 }
-                float3 PosFloat = (float3(PosInt) - 32768) / 1000;
+                float3 PosFloat = asfloat(PosInt);
                 return PosFloat;
             }
 

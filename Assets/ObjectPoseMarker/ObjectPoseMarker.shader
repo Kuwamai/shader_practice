@@ -1,4 +1,4 @@
-﻿Shader "Custom/PoseMarker" {
+﻿Shader "Custom/ObjectPoseMarker" {
     Properties{
     }
     SubShader{

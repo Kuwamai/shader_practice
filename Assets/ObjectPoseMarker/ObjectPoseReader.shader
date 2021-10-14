@@ -1,4 +1,4 @@
-﻿Shader "Custom/PoseReader" {
+﻿Shader "Custom/ObjectPoseReader" {
     Properties{
         _Photo ("Texture", 2D) = "white" {}
     }

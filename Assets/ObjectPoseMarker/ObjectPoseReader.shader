@@ -1,11 +1,10 @@
 ﻿Shader "Custom/ObjectPoseReader" {
     Properties{
-        _Photo ("Texture", 2D) = "white" {}
+        _MainTex ("Texture", 2D) = "white" {}
     }
     SubShader{
         Pass
         {
-            Blend SrcAlpha OneMinusSrcAlpha
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -24,26 +23,28 @@
                 float2 uv : TEXCOORD0;
             };
 
-            sampler2D _Photo;
+            sampler2D _MainTex;
 
-            float3 getTexVal(){
-                float2 width = float2(0.03515, 0.0625) / 2.0;
+            float3 getTexVal(int ix){
+                //float2 width = float2(1/32*9/16, 1.0/32.0);
+                float2 width = float2(0.01758, 0.03125) / 2.0;
+
                 uint3  PosInt = uint3(0, 0, 0);
-                for(int i=0; i<16; i++) {
-                    float2 uv = float2(width.x, width.y + width.y * i * 2.0);
-                    PosInt += uint3(tex2Dlod(_Photo, float4(uv, 0, 0)).xyz) << i;
+                for(int iy=0; iy<32; iy++) {
+                    float2 uv = float2(width.x + width.x * ix * 2.0, width.y + width.y * iy * 2.0);
+                    PosInt += uint3(tex2Dlod(_MainTex, float4(uv, 0, 0)).xyz) << iy;
                 }
-                float3 PosFloat = (float3(PosInt) - 32768) / 1000;
+                float3 PosFloat = asfloat(PosInt);
                 return PosFloat;
             }
 
             v2f vert(appdata v) {
                 v2f o;
-                float3 Pos = getTexVal();
+                float3 Pos = getTexVal(0);
                 float4x4 mat = float4x4(
-                    float4(1, 0, 0, Pos.x),
-                    float4(0, 1, 0, Pos.y),
-                    float4(0, 0, 1, Pos.z),
+                    float4(getTexVal(1), Pos.x),
+                    float4(getTexVal(2), Pos.y),
+                    float4(getTexVal(3), Pos.z),
                     float4(0, 0, 0, 1));
 
                 o.vertex = mul(mat, v.vertex);
@@ -54,7 +55,7 @@
 
             fixed4 frag(v2f i) : SV_Target
             {
-                fixed4 c = tex2D(_Photo, i.uv);
+                fixed4 c = tex2D(_MainTex, i.uv);
                 return c;
             }
             ENDCG
